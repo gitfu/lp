@@ -36,44 +36,6 @@ func LogParser(log string) {
 	}
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
-package main
-
-import (
-	"bufio"
-	"flag"
-	"fmt"
-	"os"
-	"strings"
-)
-
-var lc int
-var freq int
-var m map[string]*Stats
-
-type Stats struct {
-	total, errors int
-}
-
-func (stats *Stats) Percentage() float64 {
-	e := float64(stats.errors)
-	t := float64(stats.total)
-	p := (e / t) * 100.0
-	return p
-}
-
-func Reporter(m map[string]*Stats) {
-	for k, v := range m {
-		fmt.Printf("%s returned %.2f%% 5xx errors\n", k, v.Percentage())
-	}
-}
-
-func LogParser(log string) {
-	file, err := os.Open(log)
-	if err != nil {
-		return
-	}
-	defer file.Close()
-	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		LineParser(scanner.Text())
 	}
